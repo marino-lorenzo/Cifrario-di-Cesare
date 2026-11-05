@@ -1,22 +1,42 @@
-﻿int key;
-string frase, messaggio = "";
-Console.WriteLine("Inserire la chiave:");
-key = Convert.ToInt16(Console.ReadLine());
+﻿string frase;
+int key;
 Console.WriteLine("Inserire la frase:");
 frase = Console.ReadLine();
+Console.WriteLine("Inserire la chiave:");
+key = Convert.ToInt16(Console.ReadLine());
 
-for (int i = 0; i <= (frase.Length); i++ )
+for(int i = 0; i < 2; i++)
 {
-    char lettera = frase[i];
-    if (lettera != ' ' && lettera != '.' && lettera != ',')
+    string messaggio = "";
+    for (int j = 0; j < (frase.Length); j++)
     {
-        int codAscii = (int)lettera + key;
-        char lettera2 = (char)codAscii;
-        messaggio = messaggio + lettera2;
+        int codAscii = (int)frase[j];
+        if ((codAscii >= 65 && codAscii <= 90) || (codAscii >= 97 && codAscii <= 122))
+        {
+            for (int k = 0; k < key; k++)
+            {
+                if ((codAscii + 1 > 90 && codAscii + 1 < 97) || codAscii + 1 > 122)
+                {
+                    codAscii = codAscii - 25;
+                }
+                else
+                {
+                    codAscii++;
+                }
+            }
+        }
+        messaggio = messaggio + (char)codAscii;
+    }
+
+    if (i == 0)
+    {
+        Console.WriteLine($"La frase criptata è {messaggio}");
     }
     else
     {
-        messaggio = messaggio + lettera;
+        Console.WriteLine($"La frase decriptata è {messaggio}");
     }
-    Console.WriteLine(messaggio);
+
+    key = 26 - key;
+    frase = messaggio;
 }
